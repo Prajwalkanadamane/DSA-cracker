@@ -1,0 +1,2 @@
+
+    int Diagnolsum = 0;

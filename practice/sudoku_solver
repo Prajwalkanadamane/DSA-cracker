@@ -1,0 +1,59 @@
+class Solution {
+public:
+
+    bool isSafe(vector<vector<char>>& board, int row, int col, char dig){
+        for(int i=0; i<9; i++){
+            if(board[i][col] == dig){
+                return false;
+            }
+        }
+
+        for(int j=0; j<9; j++){
+            if(board[row][j] == dig){
+                return false;
+            }
+        }
+        int sRow = (row/3)*3;
+        int sCol = (col/3)*3;
+        for(int i=sRow; i<=sRow+2; i++){
+            for(int j=sCol; j<=sCol+2; j++){
+                if(board[i][j] == dig){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    bool helper(vector<vector<char>>& board, int Row, int Col){
+        
+        if(Row == 9){
+            return true;
+        }
+        // int nextRow = row, nextCol = col+1;
+        if(Col == 10){
+            Row = Row+1;
+            Col = 0;
+        }
+
+        if(board[Row][Col] != '.'){
+            return helper(board, Row, Col+1);
+        }
+
+        for(char dig='1'; dig<='9'; dig++){
+            if(isSafe(board, Row, Col, dig)){
+                board[Row][Col] = dig;
+                if(helper(board, Row, Col+1)){
+                    return true;
+                }
+                board[Row][Col] = '.';
+            }
+        }
+        return false;
+
+    }
+
+    void solveSudoku(vector<vector<char>>& board) {
+        helper(board,0,0);
+    }
+};

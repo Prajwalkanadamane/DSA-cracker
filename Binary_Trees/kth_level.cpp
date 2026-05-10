@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val){
+        data = val;
+        left = right = NULL;
+    }
+
+};
+
+static int idx = -1; 
+Node* buildTree(vector<int> preorder){
+    idx++;
+
+    if (preorder[idx] == -1){
+        return NULL;
+    }
+
+    Node* root = new Node(preorder[idx]);
+    root->left = buildTree(preorder);// Once the result (even NULL) comes back, it gets assigned, and the function continues to next line
+    root->right = buildTree(preorder);
+    //Finally, after both left and right are assigned, the function returns the root, which then gets assigned to its parent’s child pointer (left or right)
+    return root;
+
+}
+
+void kth_level(Node* root, int k){
+    if (root == NULL){
+        return;
+    }
+
+    if (k == 1){
+        cout << root->data << " ";
+    }
+
+    kth_level(root->left, k-1);
+    kth_level(root->right, k-1);
+}
+
+int main(){
+    vector<int> preorder ={1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1};
+    
+    Node* root = buildTree(preorder);
+    kth_level(root, 2);
+    return 0;
+}
