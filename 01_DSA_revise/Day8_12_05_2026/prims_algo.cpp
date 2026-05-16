@@ -26,8 +26,9 @@ int primMST(int V, vector<vector<pair<int, int>>> adj){
             for (int i=0; i<adj[u].size(); i++){
                 int v = adj[u][i].first;
                 int w = adj[u][i].second;
-
-                pq.push({w, v});
+                if (!inMST[v]){
+                    pq.push({w, v});
+                }
             }
         }
     }
@@ -44,14 +45,14 @@ int main(){
     adj[0].push_back({3, 30}); //v, wt
     adj[3].push_back({0, 30}); //v, wt
 
-    adj[1].push_back({0, 10}); //v, wt
-    adj[1].push_back({0, 10}); //v, wt
+    adj[0].push_back({2, 15}); //v, wt
+    adj[2].push_back({0, 15}); //v, wt
 
-    adj[1].push_back({0, 10}); //v, wt
-    adj[1].push_back({0, 10}); //v, wt
+    adj[1].push_back({3, 40}); //v, wt
+    adj[3].push_back({1, 40}); //v, wt
 
-    adj[1].push_back({0, 10}); //v, wt
-    adj[1].push_back({0, 10}); //v, wt
+    adj[2].push_back({3, 50}); //v, wt
+    adj[3].push_back({2, 50}); //v, wt
 
     cout << "Minimum cost of MST: " << primMST(V, adj) << endl;
 
