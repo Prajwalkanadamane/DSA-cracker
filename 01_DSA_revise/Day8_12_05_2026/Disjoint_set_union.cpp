@@ -28,8 +28,10 @@ class DisjointSetUnion{
         if (rank[parA] == rank[parB]){
             par[parB] = parA;
             rank[parA]++;
+            
         }else if (rank[parA] > rank[parB]){
             par[parB] = parA;
+
         }else{
             par[parA] = parB;
         }
@@ -66,10 +68,11 @@ int main(){
 
     dsu.unionByRank(1, 3);
     dsu.unionByRank(2, 5);
-    dsu.unionByRank(0, 3);
+    // dsu.unionByRank(0, 3);
     cout << dsu.find(2) << endl;
+    cout << dsu.find(3) << endl;
 
-    dsu.unionByRank(0, 4);
+    // dsu.unionByRank(0, 4);
 
     dsu.getInfo();
 
