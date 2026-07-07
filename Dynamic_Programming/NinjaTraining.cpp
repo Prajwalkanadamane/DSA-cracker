@@ -21,7 +21,7 @@ int ninjaTraining(int day, int last, vector<vector<int>>& points){
             maxi = max(maxi, point);
         }
     }
-    return maxi;
+    return DP[day][last] = maxi;
 
 }
 
