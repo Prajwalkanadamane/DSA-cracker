@@ -4,7 +4,6 @@ using namespace std;
 
 int Solve(int i, int j, vector<vector<int>>& matrix){
 
-
     if (j < 0 || j >= matrix[0].size()) return -1e8;
     if (i == 0) return matrix[i][j];
 
@@ -17,8 +16,8 @@ int Solve(int i, int j, vector<vector<int>>& matrix){
 
 }
 
-int Solve2(int i, int j, vector<vector<int>>& matrix, vector<vector<int>>& DP){ // Memorization
 
+int Solve2(int i, int j, vector<vector<int>>& matrix, vector<vector<int>>& DP){ // Memorization
 
     if (j < 0 || j >= matrix[0].size()) return -1e8;
     if (i == 0) return matrix[i][j];
@@ -33,7 +32,8 @@ int Solve2(int i, int j, vector<vector<int>>& matrix, vector<vector<int>>& DP){ 
 
 }
 
-int Solution(vector<vector<int>>& matrix){
+
+int Solution(vector<vector<int>>& matrix){ //Tabulation
 
     vector<vector<int>> DP(matrix.size(), vector<int> (matrix[0].size(), 0));
 
