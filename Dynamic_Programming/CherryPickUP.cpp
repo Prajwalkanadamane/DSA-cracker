@@ -16,7 +16,7 @@ int f(int i, int j1, int j2, int r, int c, vector<vector<int>>& matrix){
         for (int dj2 = -1; dj2 <= +1; dj2++){
             int value = 0;
             if (j1 == j2) value = matrix[i][j1];
-            else value + matrix[i][j1] + matrix[i][j2];
+            else value = matrix[i][j1] + matrix[i][j2];
             value += f(i+1, j1+dj1, j2+dj2, r, c, matrix);
             maxi = max(maxi, value);
         }
@@ -40,7 +40,7 @@ int f2(int i, int j1, int j2, int r, int c, vector<vector<int>>& matrix, vector<
         for (int dj2 = -1; dj2 <= +1; dj2++){
             int value = 0;
             if (j1 == j2) value = matrix[i][j1];
-            else value + matrix[i][j1] + matrix[i][j2];
+            else value = matrix[i][j1] + matrix[i][j2];
             value += f2(i+1, j1+dj1, j2+dj2, r, c, matrix, DP);
             maxi = max(maxi, value);
         }

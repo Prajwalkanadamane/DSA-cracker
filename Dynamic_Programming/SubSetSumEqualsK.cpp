@@ -5,7 +5,7 @@ using namespace std;
 bool f(vector<int>& arr, int ind, int target){
 
     if (target == 0) return true;
-    if (ind == 0) return arr[ind] = target;
+    if (ind == 0) return arr[ind] == target;
 
     bool take = false;
     bool notTake = f(arr, ind-1, target);
@@ -20,7 +20,7 @@ bool f(vector<int>& arr, int ind, int target){
 bool f2(vector<int>& arr, int ind, int target, vector<vector<int>>& DP){
 
     if (target == 0) return true;
-    if (ind == 0) return arr[ind] = target;
+    if (ind == 0) return arr[ind] == target;
 
     if (DP[ind][target] != -1) return DP[ind][target];
 
@@ -44,13 +44,13 @@ bool f3(vector<int>& arr, int n, int k){
     dp[0][arr[0]] = true;
 
     for (int i = 1; i<n; i++){
-        for (int t=0; t<k; t++){
+        for (int t=0; t<=k; t++){
             bool take = false;
             bool notTake = dp[i-1][t];
             if (t >= arr[i]){
-                take = dp[i-1][t];
-            dp[i][t] = take | notTake;
+                take = dp[i-1][t-arr[i]];
             }
+            dp[i][t] = take | notTake;
 
         }
     }
