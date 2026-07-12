@@ -28,12 +28,17 @@ bool f3(vector<int>& arr, int n, int k){
 
 int main(){
 
-    vector<int> arr = {2, 3, 3, 3, 4, 5};
+    vector<int> arr = {2, 3, 3, 3, 4, 5, 1};
     int n = arr.size();
 
     int totalSum = 0;
     for (int i=0; i<arr.size(); i++){
         totalSum += arr[i];
+    }
+
+    if (totalSum % 2 != 0){
+        cout << "FAILED" << endl;
+        return 0;
     }
 
     if (f3(arr, n, totalSum/2)) cout << "EXIST " << endl;
