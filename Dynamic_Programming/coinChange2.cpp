@@ -40,7 +40,7 @@ int f3(int target, vector<int>& arr){
 
     for (int T=0; T<target+1; T++){
         if (T % arr[0] == 0) DP[0][T] = 1;
-        else DP[0][T] = 0; 
+        // else DP[0][T] = 0; 
     }
 
     for (int i=1; i<n; i++){
@@ -63,7 +63,7 @@ int f4(int target, vector<int>& arr){
 
     for (int T=0; T<target+1; T++){
         if (T % arr[0] == 0) prev[T] = 1;
-        else prev[T] = 0; 
+        // else prev[T] = 0; 
     }
 
     for (int i=1; i<n; i++){
