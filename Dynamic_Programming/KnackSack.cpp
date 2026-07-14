@@ -40,8 +40,8 @@ int f2(int i, int knapSackW, vector<int>& values, vector<int>& weights, vector<v
 int f3(int knapSackW, vector<int>& values, vector<int>& weights){
     vector<vector<int>> DP(weights.size(), vector<int> (knapSackW+1, 0));
 
-    for (int i=weights[0]; i<=knapSackW; i++){
-        DP[0][i] = values[0];
+    for (int i=0; i<=knapSackW; i++){
+        if (i >= weights[0]) DP[0][i] = values[0];
     }
     
 
@@ -59,6 +59,29 @@ int f3(int knapSackW, vector<int>& values, vector<int>& weights){
 
 }
 
+int f4(int knapSackW, vector<int>& values, vector<int>& weights){
+    vector<int> prev(knapSackW+1, 0), curr(knapSackW+1, 0);
+
+    for (int i=0; i<=knapSackW; i++){
+        if (i >= weights[0]) prev[i] = values[0];
+    }
+    
+
+    for (int i=1; i<weights.size(); i++){
+        for (int j=0; j<=knapSackW+1; j++){
+            int notSteal = 0 + prev[j];
+            int steal = -1e8;
+
+            if (weights[i] <= knapSackW) steal = values[i] + prev[j-weights[i]];
+
+            curr[j] = max(notSteal, steal);
+        }
+        prev = curr;
+    }
+    return prev[knapSackW];
+
+}
+
 
 
 int main(){
@@ -72,6 +95,7 @@ int main(){
     cout << "ans: " << f(n-1, KnapsackW, values, weights) << endl;
     cout << "ans MEMO: " << f2(n-1, KnapsackW, values, weights, DP) << endl;
     cout << "ans TABU: " << f3(KnapsackW, values, weights) << endl;
+    cout << "ans TABU space optimized: " << f4(KnapsackW, values, weights) << endl;
 
     return 0;
 }
