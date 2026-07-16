@@ -131,8 +131,7 @@ int diagnolMatrix(int matrix [] [3], int n){
 //             }else if (j == n-1-i)
 //             {
 //                 Diagnolsum += matrix[i][j];
-//             }
-            
+//             }       
 //         }
 //     }
 //     return Diagnolsum;
@@ -150,7 +149,7 @@ int diagnolMatrix(int matrix [] [3], int n){
 }
 
 int main(){
-    int matrix [3] [3] = { {1,2,3}, {4,5,6}, {7,8,9}};
+    int matrix [3] [3] = {{1,2,3}, {4,5,6}, {7,8,9}};
     
     int n = 3;
 
