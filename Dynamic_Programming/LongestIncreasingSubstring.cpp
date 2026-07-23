@@ -5,6 +5,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int f0(int idx, int prev, int arr[], int n){
+
+    if (idx == n) return 0;
+
+    
+    int take = 0, dontT = 0;
+
+    dontT = 0 + f0(idx+1, prev, arr, n);
+    if ( prev == -1 || arr[idx] > arr[prev]){
+        take = 1 + f0(idx+1, idx, arr, n);
+    }
+
+    return max(take, dontT);
+
+}
+
+int f1(int idx, int prev, int arr[], int n, vector<vector<int>>& DP){
+
+    if (idx == n) return 0;
+
+    if (DP[idx][prev+1] != -1) return DP[idx][prev+1];
+    int take = 0, dontT = 0;
+
+    dontT = 0 + f1(idx+1, prev, arr, n, DP);
+    if (prev == -1 || arr[idx] > arr[prev]){
+        take = 1 + f1(idx+1, idx, arr, n, DP);
+    }
+
+    return DP[idx][prev+1] = max(take, dontT);
+
+}
+
 int longestIncreasingSubsequence(int arr[], int n){
 
     int idx = 0, prev = -1;
@@ -47,24 +79,27 @@ int solution(int arr[], int n){
 int main(){
 
     int arr[] = {5, 4, 11, 1, 16, 8};
+    vector<vector<int>> DP(6, vector<int>(7, -1));
     
 
-    cout << "longest Increasing Subsequence O(n)optimized: " << solution(arr, 6) << endl;
+    cout << "longest Increasing Subsequence: the recursive approach: " << f0(0, -1, arr, 6) << endl;
+    cout << "longest Increasing Subsequence: the recursive approach MEMO: " << f1(0, -1, arr, 6, DP) << endl;
 
-    cout << "longest Increasing Subsequence: " << longestIncreasingSubsequence(arr, 6) << endl;
+    // cout << "longest Increasing Subsequence O(n)optimized: " << solution(arr, 6) << endl;
+    // cout << "longest Increasing Subsequence: " << longestIncreasingSubsequence(arr, 6) << endl;
 
-    vector<int> DP(6, 1);
-    int maxi = 1;
-    for (int i=0; i<6; i++){
-        for (int j=0; j<i; j++){
-            if (arr[i] > arr[j]){
-                DP[i] = max (DP[i], 1 + DP[j]);
-            }
-        }
-        maxi = max(maxi, DP[i]);
-    }
+    // vector<int> DP(6, 1);
+    // int maxi = 1;
+    // for (int i=0; i<6; i++){
+    //     for (int j=0; j<i; j++){
+    //         if (arr[i] > arr[j]){
+    //             DP[i] = max (DP[i], 1 + DP[j]);
+    //         }
+    //     }
+    //     maxi = max(maxi, DP[i]);
+    // }
 
-    cout << "longest Increasing Subsequence using loops: " << maxi << endl;
+    // cout << "longest Increasing Subsequence using loops: " << maxi << endl;
 
     return 0;
 }
