@@ -1,0 +1,325 @@
+This is actually one of the most common confusions when learning graphs. The good news is that it's much simpler than it sounds.
+
+Let's go step by step.
+
+---
+
+## Step 1: What does the GRAPH matrix actually mean?
+
+Suppose the input is:
+
+```text
+V = 5
+E = 4
+
+GRAPH =
+0 2
+0 1
+1 2
+3 4
+```
+
+Don't think of it as a "matrix."
+
+Think of it as just a **list of friendships**.
+
+| Row | Meaning             |
+| --- | ------------------- |
+| 0 2 | 0 is connected to 2 |
+| 0 1 | 0 is connected to 1 |
+| 1 2 | 1 is connected to 2 |
+| 3 4 | 3 is connected to 4 |
+
+That's all!
+
+---
+
+## Step 2: Start with empty lists
+
+Since there are 5 vertices (0 to 4), make one list for each vertex.
+
+```text
+0 ->
+
+1 ->
+
+2 ->
+
+3 ->
+
+4 ->
+```
+
+Imagine these are five empty boxes.
+
+---
+
+## Step 3: Read the first edge
+
+First edge is
+
+```text
+0 2
+```
+
+The graph is **undirected**.
+
+That means
+
+> 0 is connected to 2
+
+and also
+
+> 2 is connected to 0.
+
+So add them to each other's lists.
+
+```text
+0 -> 2
+
+1 ->
+
+2 -> 0
+
+3 ->
+
+4 ->
+```
+
+---
+
+## Step 4: Read the next edge
+
+Edge
+
+```text
+0 1
+```
+
+Again, undirected.
+
+Add 1 to 0's list.
+
+Add 0 to 1's list.
+
+```text
+0 -> 2,1
+
+1 -> 0
+
+2 -> 0
+
+3 ->
+
+4 ->
+```
+
+---
+
+## Step 5: Read the next edge
+
+```text
+1 2
+```
+
+Add 2 to 1.
+
+Add 1 to 2.
+
+```text
+0 -> 2,1
+
+1 -> 0,2
+
+2 -> 0,1
+
+3 ->
+
+4 ->
+```
+
+---
+
+## Step 6: Read the last edge
+
+```text
+3 4
+```
+
+Add both ways.
+
+```text
+0 -> 2,1
+
+1 -> 0,2
+
+2 -> 0,1
+
+3 -> 4
+
+4 -> 3
+```
+
+This is your adjacency list.
+
+---
+
+## Here's the magic rule
+
+Every time you see
+
+```text
+u v
+```
+
+do exactly this:
+
+```cpp
+adj[u].push_back(v);
+adj[v].push_back(u);
+```
+
+Why twice?
+
+Because the graph is **undirected**.
+
+If Virat knows Rohit,
+
+then Rohit also knows Virat.
+
+---
+
+## Cricket analogy 🏏
+
+Suppose these are the players.
+
+```text
+0 = Virat
+1 = Rohit
+2 = Bumrah
+3 = Gill
+4 = Hardik
+```
+
+Friendships are
+
+```text
+Virat Bumrah
+Virat Rohit
+Rohit Bumrah
+Gill Hardik
+```
+
+Initially
+
+```text
+Virat :
+
+Rohit :
+
+Bumrah :
+
+Gill :
+
+Hardik :
+```
+
+Read
+
+```text
+Virat Bumrah
+```
+
+Write
+
+```text
+Virat : Bumrah
+
+Bumrah : Virat
+```
+
+Read
+
+```text
+Virat Rohit
+```
+
+Now
+
+```text
+Virat : Bumrah Rohit
+
+Rohit : Virat
+
+Bumrah : Virat
+```
+
+Read
+
+```text
+Rohit Bumrah
+```
+
+Now
+
+```text
+Virat : Bumrah Rohit
+
+Rohit : Virat Bumrah
+
+Bumrah : Virat Rohit
+```
+
+Read
+
+```text
+Gill Hardik
+```
+
+Finally
+
+```text
+Virat : Bumrah Rohit
+
+Rohit : Virat Bumrah
+
+Bumrah : Virat Rohit
+
+Gill : Hardik
+
+Hardik : Gill
+```
+
+Exactly the same process as building an adjacency list.
+
+---
+
+## The code is surprisingly small
+
+```cpp
+vector<int> adj[V];
+
+for (int i = 0; i < E; i++) {
+    int u = graph[i][0];
+    int v = graph[i][1];
+
+    adj[u].push_back(v);
+    adj[v].push_back(u);   // because the graph is undirected
+}
+```
+
+That's all there is to building the adjacency list.
+
+---
+
+### A question for you:
+
+If the edges are
+
+```text
+0 3
+2 3
+1 2
+```
+
+can you try writing the adjacency list yourself? I'll check your answer and point out any mistakes.
