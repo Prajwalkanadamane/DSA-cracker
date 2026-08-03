@@ -1,0 +1,10 @@
+Heap is a complete binary tree that comes with a heap order property!
+
+Binary tree: at most two child nodes.
+
+CBT: every level is completely filled except possibly  the last level.
+    ->Nodes always added from left(lean towards the left).
+
+Heap order Property:
+1.Max heap: child nodes values are always lesser than it's parents.
+2.Min heap: vice-versa.
