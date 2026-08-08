@@ -1,3 +1,6 @@
+"Whenever there's something like k smallest/largest in the question think about the HEAP".
+if k+smallest use -> max heap and vice versa.
+
 Heap is a complete binary tree that comes with a heap order property!
 
 Binary tree: at most two child nodes.
@@ -84,16 +87,16 @@ Heapify Algorithm:
 In complete binary tree: leaf nodes are from (n/2+1) -> n.
 As leaf nodes are heaps by themself we don't have to process them while performing heapify algorithm. So, we just need to process the heapify form 1 -> n/2 (process: taking the nodes to correct positions so that heap order property satisfies).
 
--> taking a node and placing it in the correct is what heapify(that we are gonna write) functions job is!
+-> taking a node and placing it in the correct position is what heapify(that we are gonna write) function's job is!
 
 void heapify(int arr[], int n, int i){
     int largest = i;
-    int left = 2*i, right = 2*i+1;
+    int left = 2*i, right = 2*i+1; // This is for the 1 based index
 
-    if (left < n && arr[largest] < arr[left]){
+    if (left <= n && arr[largest] < arr[left]){
         largest = left;
     }
-    if (right < n && arr[largest] < arr[right]){
+    if (right <= n && arr[largest] < arr[right]){
         largest = right;
     }
 
@@ -101,6 +104,7 @@ void heapify(int arr[], int n, int i){
         swap(arr[largest], arr[i]);
         heapify(arr, n, largest);
     }
+
 }
 
 int main(){
@@ -191,6 +195,64 @@ return pq.top();
     return true;
 }
 
-isCBT(root, i, Size){
+/* Solved in gfg
+class Node {
+   public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution {
+  public:
+  
+    int countNodes(Node* root){
+    if (root == NULL) return 0;
+
+    int ans = 1 + countNodes(root->left) + countNodes(root->right);
+    return ans;
+    }
     
-}
+    
+    bool isCBT(Node* root, int idx, int treeSz){
+    if (root == NULL) return true;
+
+    if (idx >= treeSz) return false;
+
+    bool left = isCBT(root->left, 2*idx+1, treeSz);
+    bool right = isCBT(root->right, 2*idx+2, treeSz);
+
+    return (left && right);
+    }
+    
+    
+    bool isMaxOrder(Node* root){
+    if (root == NULL) return true;
+    
+    if (root->left == NULL && root->right == NULL) return true;
+    if (root->right == NULL) return (root->data > root->left->data);
+
+    bool left = isMaxOrder(root->left);
+    bool right = isMaxOrder(root->right);
+
+    return ( left && right && (root->data >= root->left->data && root->data >= root->right->data));
+    }
+  
+  
+    bool isHeap(Node* root) {
+        // code here
+    if (root == NULL) return true;
+    int idx = 0;
+    int totalCount = countNodes(root);
+
+    return ( isCBT(root, idx, totalCount) && isMaxOrder(root));
+    }
+};
+
+3. Merger two binary max-heap

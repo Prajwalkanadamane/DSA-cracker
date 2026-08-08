@@ -1,0 +1,90 @@
+Question 1
+Is this a Binary Tree?
+             90
+           /    \
+         70      80
+        /  \    /  \
+      40   60  50   30
+    
+    -> Since, every node has at most two child nodes this is definately a Binary Tree.
+
+Question 2
+Is this a Complete Binary Tree?
+    -> Yes, since every level is completely filled except possibly the last level this is a CBT
+
+Question 3
+If we're talking about a Max Heap, does this satisfy the heap-order property?
+    -> Yes, because the root nodes at every level have the balue greater than their child node values
+
+Question 4 — MOST IMPORTANT
+Suppose I give you this:
+
+             90
+           /    \
+         70      80
+        /       /
+      40       50
+
+Is this a Max Heap?
+
+Don't look for a memorized definition. Reason through all the conditions.
+
+      -> It satisfies the heap order property but there's a gap between 40 and 50 which violates the CBT property, so it's neither a CBT nor Heap. 
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Why can a Heap use an Array?
+We've established:
+
+Heap = Complete Binary Tree + Heap Order Property
+
+Now look at this Max Heap:
+
+             50
+           /    \
+         30      40
+        /  \    /  \
+      10   20  35   25
+
+Because it's a Complete Binary Tree, there are no random gaps.
+
+So we can simply store it level-by-level:
+Tree:
+
+             50
+           /    \
+         30      40
+        /  \    /  \
+      10   20  35   25
+
+
+Array:
+
+Index:  1   2   3   4   5   6   7
+       [50, 30, 40, 10, 20, 35, 25]
+
+No pointers are necessary.
+And this is why CBT is so important for heaps: its structure lets us calculate where the parent and children are.
+
+INSERTION:
+Complete mental model
+
+Your entire insertion implementation can be remembered as:
+
+                INSERT
+                   ↓
+        Increase size by 1
+                   ↓
+      Put element at next position
+                   ↓
+           Compare with parent
+                   ↓
+        ┌──────────┴──────────┐
+        ↓                     ↓
+    child > parent       child ≤ parent
+        ↓                     ↓
+      SWAP                    STOP
+        ↓
+   Move index to parent
+        ↓
+      Repeat

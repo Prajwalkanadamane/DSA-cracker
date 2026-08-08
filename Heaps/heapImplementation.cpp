@@ -22,7 +22,7 @@ class heap{
 
             if (arr[parent]  < arr[index]){
                 swap(arr[parent], arr[index]);
-                index = parent;
+                index = parent; //I just moved upward. Now continue the battle from my new position.
             }else{
                 return;
             }
