@@ -7,8 +7,8 @@ bool f(int idx, int clr, vector<vector<int>>& edges, vector<int>& color){
 
     for (auto neigh : edges[idx]){
         if (color[neigh] == -1){
-            f(neigh, !clr, edges, color);
-        }else if(color[neigh] = color[idx]) return false;
+            if (f(neigh, !clr, edges, color) == false) return false;
+        }else if(color[neigh] = clr) return false;
     }
     return true;
 
@@ -22,7 +22,7 @@ int main(){
     
         for (int i=0; i<edges.size(); i++){
             if (color[i] == -1){
-                if(!f(i, 0, edges, color)) {
+                if(f(i, 0, edges, color) == false) {
                     cout << "Not a Bipartite" << endl;
                     return 0;
                 }
